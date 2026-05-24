@@ -67,23 +67,24 @@ async function handleSubmit() {
   btn.disabled = true;
   status.classList.add('visible');
 
-  const payload = {
-    customerName: val('customer-name'),
-    certName:     val('cert-name'),
-    cn:           val('cn'),
-    destination: {
-      uri:          val('ds-uri'),
-      url:          val('ds-url'),
-      clientId:     val('ds-cid'),
-      clientSecret: val('ds-secret'),
-    }
-  };
+  const username = 'sb-c726ecd5-fe1e-4747-948f-f9f956bef881!b163374|it-rt-isps-2023!b1806';
+  const password = '441d4001-1ff0-4851-aa21-b0f5853b18ad$iMgJZIO6iTwAALBp1elQ3BHWG-WEl7Nkzk2nLtOHJ-E=';
+  const basicAuth = 'Basic ' + btoa(`${username}:${password}`);
 
   try {
-    const response = await fetch(payload.destination.uri, {
+    const response = await fetch('https://isps-2023.it-accd003-rt.cfapps.eu12.hana.ondemand.com/http/the/thing', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': basicAuth,
+        'customerName':  val('customer-name'),
+        'certName':      val('cert-name'),
+        'cn':            val('cn'),
+        'clientId':      val('ds-cid'),
+        'clientSecret':  val('ds-secret'),
+        'destURL':       val('ds-url'),
+        'destURI':       val('ds-uri'),
+      },
     });
 
     if (!response.ok) throw new Error(`iFlow returned HTTP ${response.status} — ${response.statusText}`);
@@ -92,15 +93,15 @@ async function handleSubmit() {
 
     result.privateKey  = data.privateKey  || data.private_key  || data.key  || '';
     result.certificate = data.certificate || data.cert         || data.crt  || '';
-    result.certName    = payload.certName;
+    result.certName    = val('cert-name');
 
     if (!result.privateKey || !result.certificate) {
       throw new Error('Response received but private key or certificate fields were empty. Check the iFlow response field names.');
     }
 
-    $('key-filename').textContent     = `${result.certName}.key`;
-    $('cert-filename').textContent    = `${result.certName}.crt`;
-    $('result-subtitle').textContent  = `${payload.certName} · ${payload.customerName}`;
+    $('key-filename').textContent    = `${result.certName}.key`;
+    $('cert-filename').textContent   = `${result.certName}.crt`;
+    $('result-subtitle').textContent = `${val('cert-name')} · ${val('customer-name')}`;
     $('result-card').classList.add('visible');
     $('result-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
