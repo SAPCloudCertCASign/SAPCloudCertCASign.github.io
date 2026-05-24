@@ -35,7 +35,7 @@
         <div class="field">
           <label for="cert-name">Certificate name <span class="req">*</span></label>
           <input id="cert-name" type="text" placeholder="acme-prod-client" />
-          <span class="hint">Used as the output filename prefix.</span>
+          <span class="hint">Used as the output certificate name.</span>
         </div>
         <div class="field full">
           <label for="cn">Common name (CN) <span class="req">*</span></label>
@@ -51,12 +51,12 @@
     <div class="panel dest">
       <div class="field-grid">
         <div class="field full">
-          <label for="ds-uri">Service URI <span class="req">*</span></label>
-          <input id="ds-uri" type="url" placeholder="https://api.cf.eu10.hana.ondemand.com/your-iflow-path" autocomplete="off" />
+          <label for="ds-uri">Destination Service URI <span class="req">*</span></label>
+          <input id="ds-uri" type="url" placeholder="https://api.cf.eu10.hana.ondemand.com" autocomplete="off" />
         </div>
         <div class="field full">
-          <label for="ds-url">Token URL <span class="req">*</span></label>
-          <input id="ds-url" type="url" placeholder="https://subdomain.authentication.eu10.hana.ondemand.com/oauth/token" autocomplete="off" />
+          <label for="ds-url">Destination Token URL <span class="req">*</span></label>
+          <input id="ds-url" type="url" placeholder="https://subdomain.authentication.eu10.hana.ondemand.com" autocomplete="off" />
         </div>
         <div class="field">
           <label for="ds-cid">Client ID <span class="req">*</span></label>
